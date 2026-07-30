@@ -91,4 +91,43 @@
   } else {
     initToolMarquees();
   }
+
+  // Reveal-on-scroll: fade/slide content in as it enters the viewport.
+  // Skipped entirely for reduced-motion or no IntersectionObserver support,
+  // so the .reveal class (and its opacity: 0 default) never gets applied
+  // and content just shows normally.
+  function initScrollReveal() {
+    var reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (reduceMotion || !("IntersectionObserver" in window)) return;
+
+    var targets = document.querySelectorAll(
+      ".threads-intro, .thread, .tool-group, .experience-item"
+    );
+    if (!targets.length) return;
+
+    targets.forEach(function (el, i) {
+      el.classList.add("reveal");
+      el.style.transitionDelay = (i % 3) * 80 + "ms";
+    });
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    targets.forEach(function (el) {
+      observer.observe(el);
+    });
+  }
+
+  initScrollReveal();
 })();
