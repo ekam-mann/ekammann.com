@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Aeroshell CFD (Catamaran Body) · Ekam Mann</title>
-<meta name="description" content="Contributed to a RANS CFD model in ANSYS Fluent that corrected the UBC Solar catamaran aeroshell's predicted drag and lift coefficients through mesh refinement." />
+<meta name="description" content="Contributed to a body geometry change and CFD analysis in ANSYS Fluent that corrected the UBC Solar catamaran aeroshell's predicted drag and lift coefficients." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -31,26 +31,22 @@
   <header class="page-header">
     <div class="container">
       <h1>Aeroshell CFD (Catamaran Body)</h1>
-      <p class="lede">Contributed to a RANS CFD model that corrected the solar car's predicted drag and lift.</p>
+      <p class="lede">Contributed to a body geometry change and CFD analysis that corrected the solar car's predicted drag and lift.</p>
     </div>
   </header>
 
   <div class="container project-detail">
-    <p class="scope-line"><strong>Scope:</strong> Contributor, mechanical design, mesh refinement, ran simulations, post-processed results. Tool: ANSYS Fluent. Team: UBC Solar aeroshell subteam.</p>
+    <p class="scope-line"><strong>Scope:</strong> Contributor, mechanical design and body geometry change, mesh refinement, ran simulations, post-processed results. Tool: ANSYS Fluent. Team: UBC Solar aeroshell subteam.</p>
 
     <div class="project-body">
-      <p>This project developed a computational fluid dynamics (CFD) model of the UBC Solar catamaran aeroshell to predict aerodynamic drag and lift and to guide body geometry decisions. Working as part of the aeroshell team, I contributed to the mechanical design and mesh development, ran simulations, and post-processed the aerodynamic results. The goal was to build a model with enough near-wall fidelity to resolve flow separation and produce trustworthy drag and lift coefficients for design comparison.</p>
+      <h2>Overview</h2>
+      <p>This project analyzed the aerodynamics of the UBC Solar catamaran body using a steady RANS CFD model in ANSYS Fluent (k-omega SST), run at 23 m/s with drag and lift referenced to the 0.985 square meter frontal area. I contributed as part of the aeroshell subteam across the mechanical design and the CFD work: I helped develop a change to the body geometry, refined the mesh, ran simulations, and post-processed the aerodynamic results.</p>
 
-      <h2>Modelling Approach</h2>
-      <p>The simulation used a steady, incompressible RANS solver in ANSYS Fluent with the k-omega SST turbulence model, chosen for its strength in resolving adverse pressure gradients and boundary layer separation on the curved catamaran surfaces. Flow conditions were set to a freestream velocity of 23 m/s, with drag and lift referenced to the catamaran frontal area of 0.985 square meters.</p>
+      <h2>Body Geometry Change (the driver of the result)</h2>
+      <p>The corrected drag and lift predictions came primarily from a change to the car's body, a team effort that reduced frontal area and curved the front of the body further down. This reshaping was the dominant cause of the improved coefficients, not the meshing. Between the design iterations, the predicted drag coefficient moved from <span class="metric">0.176 to 0.128</span> and the predicted lift coefficient from <span class="metric">-1.0 to -0.55</span>, where negative lift is intended downforce on the catamaran body.</p>
 
-      <h2>The Problem</h2>
-      <p>The first iteration of the mesh did not resolve the near-wall region well enough to trust its separation behavior:</p>
-      <ul>
-        <li>Around 2 million cells with only 3 inflation layers and a coarse surface resolution.</li>
-        <li>A y+ range of 1 to 500, leaving most of the near-wall region unresolved.</li>
-        <li>Poor flow separation prediction and low overall fidelity, which undermined confidence in the resulting force coefficients.</li>
-      </ul>
+      <h2>Mesh Refinement (fidelity, not the cause)</h2>
+      <p>Separately, I contributed to the refinement of the CFD mesh to make the prediction trustworthy rather than to change the numbers. The mesh went from roughly 2 million cells with 3 inflation layers and a y+ range of 1 to 500, where the near-wall region and flow separation were poorly resolved, to 8.9 million cells with 24 or more inflation layers and a controlled y+ of 0.5 to 5. This resolved the near-wall flow and improved separation accuracy, but it changed the force coefficients only by a small amount. Its value was confidence in the result, not the result itself.</p>
 
       <div class="image-block">
         <figure>
@@ -59,21 +55,8 @@
         </figure>
       </div>
 
-      <h2>Mesh Refinement</h2>
-      <p>To resolve the near-wall flow, the mesh was rebuilt with substantially higher resolution and tighter y+ control:</p>
-      <ul>
-        <li>Cell count increased from roughly 2 million to 8.9 million.</li>
-        <li>Inflation layers increased from 3 to 24 or more, with a finer surface mesh.</li>
-        <li>y+ brought down from a 1 to 500 range to a controlled 0.5 to 5, resolving the near-wall region and greatly improving separation accuracy.</li>
-      </ul>
-
-      <h2>The Outcome</h2>
-      <p>Resolving the near-wall region shifted the predicted coefficients between iterations, correcting the drag and lift estimates the team was designing against:</p>
-      <ul>
-        <li>Predicted drag coefficient corrected from <span class="metric">0.176 to 0.128</span>.</li>
-        <li>Predicted lift coefficient corrected from <span class="metric">-1.0 to -0.55</span>, where negative lift indicates intended downforce on the catamaran body.</li>
-      </ul>
-      <p>The refined model gave the team more reliable pressure distributions and force predictions to compare body geometries against, rather than coefficients biased by an underresolved boundary layer.</p>
+      <h2>Outcome and Honest Limitations</h2>
+      <p>The refined, better resolved model gave the team reliable pressure distributions and force predictions to compare body geometries against. The headline improvement in drag and lift is attributable to the body change; the mesh work confirmed it was real rather than a meshing artifact.</p>
 
       <div class="image-block">
         <figure>
@@ -83,11 +66,8 @@
       </div>
 
       <div class="caveat">
-        <p><strong>On validation:</strong> this work is a contribution to a team model, not a solo effort, and the coefficients above have not yet been validated against physical or wind tunnel data. They represent an improvement in mesh quality and near-wall resolution between iterations, not a confirmed measurement.</p>
+        <p><strong>On validation:</strong> the model has not yet been validated against physical or wind tunnel data, so the coefficients rest on the CFD setup and near-wall resolution rather than experimental agreement. A formal mesh independence study and physical validation are the natural next steps.</p>
       </div>
-
-      <h2>Reflection and Next Steps</h2>
-      <p>This project deepened my understanding of turbulence modelling, near-wall meshing, and the direct link between y+ control and separation prediction fidelity. It also reinforced how much a reported coefficient depends on mesh quality, and the importance of verifying near-wall resolution before trusting CFD output. Next steps would include a formal mesh independence study and validation of the predicted coefficients against physical or wind tunnel data.</p>
     </div>
 
     <nav class="project-nav" aria-label="Project navigation">
