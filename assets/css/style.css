@@ -1,25 +1,25 @@
 /* ============================================================
    Ekam Mann — Portfolio
-   Design system: technical-document-meets-modern-web.
-   Light background paper, engineering blue accent, mono for
-   specs/metrics, hairline rules instead of shadows.
+   Design system: dark, bold, engineering-credible. Near-black
+   ground, engineering blue accent, mono for specs/metrics/tools,
+   hairline rules instead of shadows.
    ============================================================ */
 
 :root {
-  --bg: #faf9f7;
-  --surface: #ffffff;
-  --surface-raised: #ffffff;
-  --text: #14181c;
-  --text-secondary: #4a5157;
-  --text-tertiary: #6b7278;
-  --border: #dfe1e3;
-  --border-strong: #c7cbce;
-  --accent: #1d4a8f;
-  --accent-strong: #123164;
-  --accent-on: #ffffff;
-  --accent-tint: #e9f0fb;
-  --focus-ring: #1d4a8f;
-  --code-bg: #f1f0ed;
+  --bg: #0a0a0a;
+  --surface: #131517;
+  --surface-raised: #17191c;
+  --text: #f5f6f7;
+  --text-secondary: #b7bcc0;
+  --text-tertiary: #83898e;
+  --border: #262a2d;
+  --border-strong: #3a3f43;
+  --accent: #6ea1f2;
+  --accent-strong: #a5c4f7;
+  --accent-on: #0a0a0a;
+  --accent-tint: #16233a;
+  --focus-ring: #6ea1f2;
+  --code-bg: #1a1d20;
   --shadow: none;
 
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -30,42 +30,6 @@
   --container-w: 1120px;
   --radius: 3px;
   --nav-h: 64px;
-}
-
-:root[data-theme="dark"] {
-  --bg: #0d0f11;
-  --surface: #15181b;
-  --surface-raised: #1a1e22;
-  --text: #edf0f2;
-  --text-secondary: #aeb4b9;
-  --text-tertiary: #868d92;
-  --border: #2a2f34;
-  --border-strong: #3a4046;
-  --accent: #6ea1f2;
-  --accent-strong: #a5c4f7;
-  --accent-on: #0d0f11;
-  --accent-tint: #16233a;
-  --focus-ring: #6ea1f2;
-  --code-bg: #1c2024;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0d0f11;
-    --surface: #15181b;
-    --surface-raised: #1a1e22;
-    --text: #edf0f2;
-    --text-secondary: #aeb4b9;
-    --text-tertiary: #868d92;
-    --border: #2a2f34;
-    --border-strong: #3a4046;
-    --accent: #6ea1f2;
-    --accent-strong: #a5c4f7;
-    --accent-on: #0d0f11;
-    --accent-tint: #16233a;
-    --focus-ring: #6ea1f2;
-    --code-bg: #1c2024;
-  }
 }
 
 /* ---------- Reset ---------- */
@@ -327,43 +291,59 @@ main {
 }
 
 /* ---------- Hero / About ---------- */
+/* --hero-bg-image is unset until a photo is supplied; the scrim
+   layer alone gives an intentional dark vignette as a placeholder.
+   To drop in a photo later, set on .hero:
+     style="--hero-bg-image: url('/assets/img/hero-bg.jpg');" */
 .hero {
-  padding: 4.5rem 0 3rem;
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 0 4rem;
   border-bottom: 1px solid var(--border);
-  background-image: linear-gradient(
-      to right,
-      var(--border) 1px,
-      transparent 1px
-    );
-  background-size: 48px 100%;
-  background-position: center top;
-  background-repeat: repeat-x;
+  isolation: isolate;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--hero-bg-image, none),
+    radial-gradient(ellipse 90% 60% at 50% 0%, #182335 0%, transparent 60%),
+    linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0.92) 75%, var(--bg) 100%);
+  background-size: cover, cover, 100% 100%;
+  background-position: center, center, center;
   background-color: var(--bg);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: linear-gradient(to right, var(--border) 1px, transparent 1px);
+  background-size: 48px 100%;
+  opacity: 0.5;
 }
 
 @media (max-width: 640px) {
   .hero {
-    padding: 3rem 0 2.25rem;
-    background-image: none;
+    padding: 4rem 0 2.5rem;
+  }
+  .hero::after {
+    display: none;
   }
 }
 
-.hero-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 0.9rem;
-}
-
 .hero h1 {
-  font-size: clamp(2rem, 4.5vw, 2.9rem);
-  max-width: 18ch;
+  font-size: clamp(2.5rem, 8vw, 5.25rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  max-width: 16ch;
 }
 
 .hero .lede {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   color: var(--text-secondary);
   max-width: 62ch;
   margin-bottom: 1.75rem;
@@ -419,6 +399,191 @@ main {
   color: var(--text-secondary);
   font-size: 0.97rem;
   margin: 0;
+}
+
+/* ---------- Tools (marquee) ---------- */
+.tools-section {
+  padding: 3.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.tool-group {
+  margin-bottom: 2rem;
+}
+
+.tool-group:last-child {
+  margin-bottom: 0;
+}
+
+.tool-group-label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 0.75rem;
+}
+
+.tool-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    black 6%,
+    black 94%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    black 6%,
+    black 94%,
+    transparent
+  );
+}
+
+.tool-marquee-track {
+  display: flex;
+  gap: 0.6rem;
+  width: max-content;
+  animation: tool-marquee 26s linear infinite;
+}
+
+.tool-marquee:hover .tool-marquee-track {
+  animation-play-state: paused;
+}
+
+.tool-marquee[data-dir="reverse"] .tool-marquee-track {
+  animation-direction: reverse;
+}
+
+@keyframes tool-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .tool-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+.tool-pill {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.4em 0.9em;
+  white-space: nowrap;
+}
+
+.tool-pill-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  border-radius: 3px;
+  background: #ffffff;
+  padding: 2px;
+  flex: none;
+}
+
+.tool-pill svg.tool-pill-icon {
+  fill: currentColor;
+  background: none;
+  padding: 0;
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- Experience ---------- */
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.experience-item {
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+}
+
+.experience-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.experience-title {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.experience-logo {
+  height: 40px;
+  width: auto;
+  max-width: 96px;
+  object-fit: contain;
+  border-radius: 4px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 4px 6px;
+  flex: none;
+}
+
+.experience-role {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.experience-role span {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.experience-meta {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.experience-desc {
+  color: var(--text-secondary);
+  max-width: 68ch;
+  margin-bottom: 0.9rem;
+}
+
+.experience-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.experience-links a {
+  font-weight: 600;
+  text-decoration: none;
 }
 
 /* ---------- CTA band ---------- */
