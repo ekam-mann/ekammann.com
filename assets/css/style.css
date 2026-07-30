@@ -333,6 +333,28 @@ main {
   .hero::after {
     display: none;
   }
+  /* The desktop hero photo is cropped wide (roughly 2.6:1) for a wide,
+     short banner. On mobile the hero is narrow and tall, so
+     background-size: cover on that crop would zoom in so far only a
+     sliver of the image is visible. Use a separate, portrait-friendlier
+     crop instead of fighting one image across two very different
+     container shapes. */
+  .hero::before {
+    background-image: url("/assets/img/hero-aeroshell-mobile.jpg"),
+      radial-gradient(
+        ellipse 90% 60% at 50% 0%,
+        #182335 0%,
+        transparent 60%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(10, 10, 10, 0.35) 0%,
+        rgba(10, 10, 10, 0.92) 75%,
+        var(--bg) 100%
+      );
+    background-size: cover, cover, 100% 100%;
+    background-position: center 25%, center, center;
+  }
 }
 
 .hero h1 {
