@@ -1,0 +1,9 @@
+# Local Claude Code config, not part of the published site
+.claude/
+
+# Raw/unoptimized source images (kept locally, not published)
+portfolio_assets/
+
+# OS junk
+.DS_Store
+Thumbs.db

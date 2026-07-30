@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vortex Generator Research (NACA 2412) · Ekam Mann</title>
+<meta name="description" content="Grant-funded research optimizing vortex generator placement on a NACA 2412 airfoil, verifying a 76% increase in stall angle in a self-built wind tunnel." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="container">
+    <a class="nav-brand" href="/">Ekam Mann</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2.5 5h15M2.5 10h15M2.5 15h15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">About</a></li>
+      <li><a href="/projects/" aria-current="page">Projects</a></li>
+      <li><a href="/resume/">Resume</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <header class="page-header">
+    <div class="container">
+      <h1>Vortex Generator Research (NACA 2412)</h1>
+      <p class="lede">Verified a <span class="metric">76% increase</span> in stall angle by optimizing vortex generator placement, in a self built wind tunnel.</p>
+    </div>
+  </header>
+
+  <div class="container project-detail">
+    <p class="scope-line"><strong>Scope:</strong> Co-researcher, designed and tested 7 of 14 vortex generator configurations, with research partner Nathan Xia. Tools: self built low speed visualization wind tunnel, FDM 3D printing, TinkerCAD. Grant funded.</p>
+
+    <div class="project-body">
+      <p>This research optimized the placement and spacing of vortex generators (VGs) on a NACA 2412 airfoil to delay boundary layer separation and raise the stall angle of attack. The NACA 2412 is common on low speed general aviation aircraft such as the Cessna 172, where VGs are far less developed than on high speed commercial wings. The work was completed with a research partner, Nathan Xia. Across the study we designed and tested 14 VG configurations, of which I owned 7, and it was later written up as a formal paper.</p>
+
+      <h2>Research Question</h2>
+      <p>How does the long gap spacing (2, 3, 4, 5 mm) and chordwise location (10, 15, 20, 25 percent) of VGs on a NACA 2412 airfoil affect its stall angle at low speed, at a Reynolds number below 2300?</p>
+
+      <h2>Method</h2>
+      <p>Testing used a low speed smoke flow visualization wind tunnel built from scratch, with a 7.5 by 34.0 by 12.0 cm chamber, an airspeed of 0.84 m/s, and a Reynolds number below 2300. Eight 75 mm chord airfoils were 3D printed in PLA, one control plus seven carrying VGs, with vane height, length, shape, type, and inflow angle held fixed so only long gap spacing and chordwise location varied. Angle of attack was raised until the separation point reached 30 percent chord, the approximate point of maximum thickness on a NACA 2412, recorded visually with incense smoke over three trials per airfoil, reading the protractor only after separation to remove bias.</p>
+
+      <div class="image-block">
+        <figure>
+          <img src="/assets/img/p3-airfoil-tunnel.jpg" alt="3D printed NACA 2412 test airfoil in the self-built wind tunnel, with the separation point measured under smoke visualization." loading="lazy" width="601" height="304" style="max-width: 601px;" />
+          <figcaption>3D printed NACA 2412 test airfoil with the separation angle measured under smoke visualization.</figcaption>
+        </figure>
+      </div>
+
+      <h2>Results</h2>
+      <p>Parabolic fits to the averaged data (R squared above 0.93 for both) located the optima and quantified the effect:</p>
+      <ul>
+        <li>Optimal chordwise location of 17.2 percent chord raised the separation angle to 11.8 degrees, a <span class="metric">76% increase</span> over the control airfoil at 6.7 degrees.</li>
+        <li>Optimal long gap spacing of 3.6 mm raised the angle to 7.5 degrees, a 12% increase, showing placement matters far more than spacing.</li>
+        <li>Poorly chosen VGs hurt: 2 mm and 5 mm spacings gave 5.2 and 5.7 degrees, below the bare airfoil, consistent with added parasitic drag outweighing the mixing benefit.</li>
+      </ul>
+
+      <div class="caveat">
+        <p><strong>On scope and validity:</strong> the tunnel runs at a Reynolds number below 2300, a low speed tabletop regime. These results are a proof of concept, not a direct prediction of flight scale performance. Vortex generator behavior does not extrapolate cleanly to the far higher Reynolds numbers of an aircraft in cruise.</p>
+        <p>Better separation control on beginner aircraft carries potential efficiency implications only if validated at flight Reynolds numbers. No fuel savings or efficiency figure is claimed here; efficiency was the motivation for the study, not a measured result.</p>
+      </div>
+
+      <h2>Reflection and Next Steps</h2>
+      <p>The headline result is the verified 76% increase in stall angle from placement optimization alone. Natural next steps are measuring lift and drag coefficients directly, and testing at higher Reynolds numbers.</p>
+      <p>This project enhanced my ability to conduct experimental research, analyze data, and communicate technical findings.</p>
+    </div>
+
+    <nav class="project-nav" aria-label="Project navigation">
+      <a href="/projects/windshield-thermoforming/">← Previous: Windshield Thermoforming</a>
+      <a href="/projects/aeroshell-cfd/">Next: Aeroshell CFD →</a>
+    </nav>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-contact">
+      <a href="#" data-mail-user="ekammann" data-mail-domain="student.ubc.ca">ekammann [at] student.ubc.ca</a>
+      <a href="https://linkedin.com/in/ekam-m" target="_blank" rel="noopener">linkedin.com/in/ekam-m</a>
+    </div>
+    <p class="footer-note">UBC Vancouver, Mechanical Engineering (aerospace specialization), expected 2029.</p>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>
