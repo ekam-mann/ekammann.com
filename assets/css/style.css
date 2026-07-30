@@ -252,25 +252,24 @@ main {
   .nav-toggle {
     display: flex;
   }
+  .site-nav .container {
+    flex-wrap: wrap;
+  }
+  /* In-flow collapsible panel (not fixed) so opening the menu pushes
+     the page down instead of floating over the hero content below it. */
   .nav-links {
-    position: fixed;
-    top: var(--nav-h);
-    left: 0;
-    right: 0;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
+    order: 3;
+    flex-basis: 100%;
     flex-direction: column;
     gap: 0;
-    padding: 0.5rem 1.5rem 1rem;
-    transform: translateY(-8px);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 180ms ease, transform 180ms ease;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 220ms ease;
   }
   .nav-links.is-open {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
+    max-height: 320px;
+    border-top: 1px solid var(--border);
   }
   .nav-links li {
     width: 100%;
