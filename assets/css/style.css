@@ -424,8 +424,15 @@ main {
   margin-bottom: 0.75rem;
 }
 
+/* Default/fallback state (no JS, or motion reduced): a plain wrapped
+   row of pills, no animation. JS measures each track and only adds
+   .is-marquee-ready once it has padded the content wide enough to
+   loop with no visible gap, whatever the item count. */
 .tool-marquee {
   overflow: hidden;
+}
+
+.tool-marquee.is-marquee-ready {
   -webkit-mask-image: linear-gradient(
     90deg,
     transparent,
@@ -444,12 +451,17 @@ main {
 
 .tool-marquee-track {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.6rem;
+}
+
+.tool-marquee.is-marquee-ready .tool-marquee-track {
+  flex-wrap: nowrap;
   width: max-content;
   animation: tool-marquee 26s linear infinite;
 }
 
-.tool-marquee:hover .tool-marquee-track {
+.tool-marquee.is-marquee-ready:hover .tool-marquee-track {
   animation-play-state: paused;
 }
 
@@ -463,18 +475,6 @@ main {
   }
   to {
     transform: translateX(-50%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tool-marquee-track {
-    animation: none;
-    flex-wrap: wrap;
-    width: 100%;
-  }
-  .tool-marquee {
-    -webkit-mask-image: none;
-    mask-image: none;
   }
 }
 
