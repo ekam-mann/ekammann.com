@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Autonomous Underwater Claw · Ekam Mann</title>
+<meta name="description" content="Team lead on a closed-loop underwater gripper: Arduino, ultrasonic sensing, and a state machine that verifies each grab before committing." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://ekammann.com/projects/autonomous-claw/" />
+<meta property="og:title" content="Autonomous Underwater Claw · Ekam Mann" />
+<meta property="og:description" content="Team lead on a closed-loop underwater gripper: Arduino, ultrasonic sensing, and a state machine that verifies each grab before committing." />
+<meta property="og:image" content="https://ekammann.com/assets/img/og-image.jpg" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Autonomous Underwater Claw · Ekam Mann" />
+<meta name="twitter:description" content="Team lead on a closed-loop underwater gripper: Arduino, ultrasonic sensing, and a state machine that verifies each grab before committing." />
+<meta name="twitter:image" content="https://ekammann.com/assets/img/og-image.jpg" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" href="/assets/img/favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="icon" href="/assets/img/favicon-16.png" type="image/png" sizes="16x16" />
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="container">
+    <a class="nav-brand" href="/">Ekam Mann</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2.5 5h15M2.5 10h15M2.5 15h15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">About</a></li>
+      <li><a href="/projects/" aria-current="page">Projects</a></li>
+      <li><a href="/resume/">Resume</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <header class="page-header">
+    <div class="container">
+      <h1>Autonomous Underwater Claw</h1>
+      <p class="lede">Closed-loop underwater gripper with automatic grab verification and retry.</p>
+    </div>
+  </header>
+
+  <div class="container project-detail">
+    <p class="scope-line"><strong>Scope:</strong> Team lead, APSC 101 course project (Team K1). Tools: Arduino, SolidWorks. Team: Team K1.</p>
+
+    <div class="project-body">
+      <h2>Overview</h2>
+      <p>A gripper mechanism that detects, grabs, confirms, and releases an object underwater with no operator input. An Arduino reads distance from an ultrasonic sensor, drives a 180 degree servo to actuate the claw, and runs a state machine that verifies each grab actually lifted the object before committing, retrying automatically on failure.</p>
+
+      <h2>How It Works</h2>
+      <p>The system runs a four state machine:</p>
+      <ul>
+        <li><strong>SEARCHING:</strong> waits for an object to enter grab range, within 10 cm.</li>
+        <li><strong>SETTLING:</strong> confirms the object stays in range for a short hold window before committing, so a momentary blip does not trigger a grab.</li>
+        <li><strong>GRABBING:</strong> closes the claw, then checks whether the measured distance rises past a lift confirmation threshold of 18 cm. If it does, the grab succeeded. If not, within the retry window, it reopens and returns to searching.</li>
+        <li><strong>HOLDING:</strong> keeps the claw closed until the object is released or lost, past 25 cm, then reopens.</li>
+      </ul>
+      <p>The key design point is that it is closed loop. It does not assume a grab worked. It confirms the lift from sensor feedback and self corrects on failure. Distance readings are smoothed with a rolling average, and sampling runs at a fixed 50 ms interval using non blocking timing rather than blocking delays.</p>
+
+      <div class="video-block">
+        <video controls preload="metadata" poster="/assets/img/autonomous-claw-poster.jpg" width="1000" height="1778">
+          <source src="/assets/video/autonomous-claw-demo.mp4" type="video/mp4" />
+        </video>
+        <figcaption>Bench test of the claw completing a grab.</figcaption>
+      </div>
+
+      <h2>Design Decisions</h2>
+      <ul>
+        <li>Replaced overlapping open loop trigger conditions with an explicit state machine to remove state chatter, where multiple branches previously fought over the servo near threshold boundaries.</li>
+        <li>Spread the grab, lift confirm, and lost thresholds (10, 18, and 25 cm) well outside ultrasonic measurement jitter so the smoothed reading cannot bounce between states.</li>
+        <li>Added lift confirmation as the feedback signal that makes the loop closed rather than fire and forget.</li>
+        <li>Used a rolling average filter plus a fixed rate, non blocking sample loop for timing stability.</li>
+      </ul>
+
+      <h2>Fabrication</h2>
+      <p>Sheet metal components were fabricated to <span class="metric">±1 mm</span> tolerances across 12 joints. Interference envelopes were simulated in SolidWorks before fabrication, which cut material waste by <span class="metric">20%</span> pre build. The team's engineering drawings name the assembly QuadGrip.</p>
+
+      <div class="image-pair">
+        <figure>
+          <img src="/assets/img/autonomous-claw-cad.jpg" alt="SolidWorks assembly render of the claw mechanism, showing the sonar and power supply housing, servo motor, and sheet metal frame legs." loading="lazy" width="808" height="660" />
+          <figcaption>SolidWorks assembly render.</figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/img/autonomous-claw-drawing.jpg" alt="Engineering drawing of the QuadGrip assembly, dimensioned in millimeters, showing sonar, power supply, servo motor, and Arduino Uno placement." loading="lazy" width="1400" height="2050" />
+          <figcaption>QuadGrip assembly drawing, Team K1.</figcaption>
+        </figure>
+      </div>
+
+      <h2>Source Code</h2>
+      <p>The full Arduino sketch is on GitHub, unmodified from what runs on the hardware.</p>
+      <p><a class="btn btn-secondary" href="https://github.com/ekam-mann/autonomous-claw" target="_blank" rel="noopener">View on GitHub</a></p>
+
+      <details class="code-details">
+        <summary class="code-summary">claw.ino</summary>
+        <pre><code>#include &lt;Servo.h&gt;
+
+Servo myServo;
+
+// ---------------- Pins ----------------
+const int servoPin = 8;
+const int trigPin  = 11;
+const int echoPin  = 10;
+
+// ---------------- Servo positions ----------------
+const int posOpen  = 180;
+const int posClose = 0;
+
+// ---------------- Thresholds (cm) ----------------
+// Spread wider than sonar jitter to avoid state chatter near boundaries.
+const float GRAB_THRESHOLD    = 10.0;  // object close enough to attempt grab
+const float LIFT_CONFIRM      = 18.0;  // distance proving the object was lifted
+const float LOST_THRESHOLD    = 25.0;  // object gone / dropped: reopen and reset
+
+// ---------------- Timing (ms) ----------------
+const unsigned long HOLD_TIME   = 300;   // object must stay in range before grabbing
+const unsigned long LIFT_WAIT   = 1200;  // window to confirm a successful lift
+const unsigned long LOOP_PERIOD = 50;    // fixed sample interval
+const unsigned long ECHO_TIMEOUT = 25000; // us; caps pulseIn blocking
+
+// ---------------- Averaging ----------------
+#define AVG_SIZE 5
+float distances[AVG_SIZE];
+int idx = 0;
+bool bufferFilled = false;
+
+// ---------------- State machine ----------------
+enum ClawState { SEARCHING, SETTLING, GRABBING, HOLDING };
+ClawState state = SEARCHING;
+
+unsigned long settleStart = 0;
+unsigned long grabStart   = 0;
+unsigned long lastLoop    = 0;
+
+// ------------------------------------------------
+// Rolling average. Returns false until the buffer has real data.
+bool getAverageDistance(float newVal, float &amp;out) {
+  distances[idx] = newVal;
+  idx = (idx + 1) % AVG_SIZE;
+  if (idx == 0) bufferFilled = true;
+  if (!bufferFilled) return false;
+
+  float sum = 0;
+  for (int i = 0; i &lt; AVG_SIZE; i++) sum += distances[i];
+  out = sum / AVG_SIZE;
+  return true;
+}
+
+// ------------------------------------------------
+// Returns distance in cm, or -1 on timeout (no echo).
+float readSonar() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH, ECHO_TIMEOUT);
+  if (duration == 0) return -1.0;
+  return duration * 0.034 / 2.0;
+}
+
+// ------------------------------------------------
+void openClaw()  { myServo.write(posOpen);  }
+void closeClaw() { myServo.write(posClose); }
+
+// ------------------------------------------------
+void setup() {
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+
+  myServo.attach(servoPin);
+  openClaw();
+
+  Serial.begin(9600);
+  lastLoop = millis();
+}
+
+// ------------------------------------------------
+void loop() {
+  unsigned long now = millis();
+  if (now - lastLoop &lt; LOOP_PERIOD) return;  // fixed-rate sampling
+  lastLoop = now;
+
+  float raw = readSonar();
+  if (raw &lt; 0) return;  // no echo this cycle, skip
+
+  float distance;
+  if (!getAverageDistance(raw, distance)) return;  // wait for buffer to fill
+
+  Serial.print(&quot;State: &quot;);
+  Serial.print(state);
+  Serial.print(&quot;  Dist: &quot;);
+  Serial.println(distance);
+
+  switch (state) {
+
+    case SEARCHING:
+      // Wait for an object to enter grab range.
+      if (distance &lt;= GRAB_THRESHOLD) {
+        state = SETTLING;
+        settleStart = now;
+      }
+      break;
+
+    case SETTLING:
+      // Confirm the object is stable in range before committing.
+      if (distance &gt; GRAB_THRESHOLD) {
+        state = SEARCHING;              // drifted out, abort
+      } else if (now - settleStart &gt;= HOLD_TIME) {
+        Serial.println(&quot;Closing claw&quot;);
+        closeClaw();
+        state = GRABBING;
+        grabStart = now;
+      }
+      break;
+
+    case GRABBING:
+      // Closed-loop check: did the grip actually lift the object?
+      if (distance &gt;= LIFT_CONFIRM) {
+        Serial.println(&quot;Lift confirmed&quot;);
+        state = HOLDING;                // success
+      } else if (now - grabStart &gt;= LIFT_WAIT) {
+        Serial.println(&quot;Grab failed, retrying&quot;);
+        openClaw();
+        state = SEARCHING;              // failure, reopen and retry
+      }
+      break;
+
+    case HOLDING:
+      // Hold until the object is released or lost.
+      if (distance &gt;= LOST_THRESHOLD) {
+        Serial.println(&quot;Object released, reopening&quot;);
+        openClaw();
+        state = SEARCHING;
+      }
+      break;
+  }
+}
+</code></pre>
+      </details>
+    </div>
+
+    <nav class="project-nav" aria-label="Project navigation">
+      <a href="/projects/aeroshell-cfd/">← Previous: Aeroshell CFD</a>
+      <a href="/projects/">All Projects</a>
+    </nav>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-contact">
+      <a href="#" data-mail-user="ekammann" data-mail-domain="student.ubc.ca">ekammann [at] student.ubc.ca</a>
+      <a href="https://linkedin.com/in/ekam-m" target="_blank" rel="noopener">linkedin.com/in/ekam-m</a>
+    </div>
+    <p class="footer-note">UBC Vancouver, Mechanical Engineering, expected 2029.</p>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

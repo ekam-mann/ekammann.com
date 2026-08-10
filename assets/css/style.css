@@ -981,6 +981,71 @@ figcaption {
   background: var(--code-bg);
 }
 
+.video-block {
+  margin: 2rem 0;
+  max-width: 420px;
+}
+
+.video-block video {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  width: 100%;
+  display: block;
+  background: var(--code-bg);
+}
+
+/* ---------- Code block ---------- */
+.code-details {
+  margin: 1.75rem 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--code-bg);
+}
+
+.code-summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.9rem 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.code-summary::-webkit-details-marker {
+  display: none;
+}
+
+.code-summary::after {
+  content: "Show code";
+  font-weight: 500;
+  color: var(--accent);
+  font-size: 0.8rem;
+}
+
+.code-details[open] .code-summary::after {
+  content: "Hide code";
+}
+
+.code-details pre {
+  margin: 0;
+  padding: 1.1rem;
+  border-top: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.code-details code {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  white-space: pre;
+}
+
 .project-nav {
   display: flex;
   justify-content: space-between;
