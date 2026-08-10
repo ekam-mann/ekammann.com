@@ -990,6 +990,7 @@ figcaption {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   width: 100%;
+  height: auto;
   display: block;
   background: var(--code-bg);
 }
