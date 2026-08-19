@@ -34,9 +34,3 @@ Then open `http://localhost:8090`.
 ## Deployment
 
 Hosted on GitHub Pages, served from the `main` branch root. The `CNAME` file points the custom domain at `ekammann.com`; DNS is configured separately at the registrar (A records to GitHub Pages).
-
-## Content rules
-
-- No em dashes or en dashes anywhere in site copy.
-- No invented or embellished metrics. Every number traces back to project source material.
-- Contact email is obfuscated in the markup and assembled by `main.js` at runtime.
