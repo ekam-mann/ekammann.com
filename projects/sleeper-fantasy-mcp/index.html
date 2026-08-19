@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sleeper Fantasy Football MCP · Ekam Mann</title>
+<meta name="description" content="An MCP server that scores fantasy football projections against your Sleeper league's actual rules for draft, waiver, trade, and lineup advice." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://ekammann.com/projects/sleeper-fantasy-mcp/" />
+<meta property="og:title" content="Sleeper Fantasy Football MCP · Ekam Mann" />
+<meta property="og:description" content="An MCP server that scores fantasy football projections against your Sleeper league's actual rules for draft, waiver, trade, and lineup advice." />
+<meta property="og:image" content="https://ekammann.com/assets/img/og-image.jpg" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Sleeper Fantasy Football MCP · Ekam Mann" />
+<meta name="twitter:description" content="An MCP server that scores fantasy football projections against your Sleeper league's actual rules for draft, waiver, trade, and lineup advice." />
+<meta name="twitter:image" content="https://ekammann.com/assets/img/og-image.jpg" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" href="/assets/img/favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="icon" href="/assets/img/favicon-16.png" type="image/png" sizes="16x16" />
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="container">
+    <a class="nav-brand" href="/">Ekam Mann</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2.5 5h15M2.5 10h15M2.5 15h15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">About</a></li>
+      <li><a href="/projects/" aria-current="page">Projects</a></li>
+      <li><a href="/resume/">Resume</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <header class="page-header">
+    <div class="container">
+      <h1>Sleeper Fantasy Football MCP</h1>
+      <p class="lede">MCP server that scores every projection against your league's actual rules, for draft, waiver, trade, and lineup advice.</p>
+    </div>
+  </header>
+
+  <div class="container project-detail">
+    <p class="scope-line"><strong>Scope:</strong> Solo, independent project. Tools: Python, MCP, Sleeper API.</p>
+
+    <div class="project-body">
+      <h2>Overview</h2>
+      <p>An MCP (Model Context Protocol) server that gives league accurate fantasy football advice for Sleeper leagues. Generic rankings assume generic scoring. This re-scores every projection as a dot product against a league's actual scoring settings, then converts it to VOR (value over replacement) using that league's actual roster shape, before generating draft, waiver, trade, or lineup recommendations.</p>
+
+      <h2>Features</h2>
+      <ul>
+        <li><strong>Draft advice:</strong> VOR rankings, position tiers, keeper analysis, and draft planning.</li>
+        <li><strong>In season management:</strong> waiver targets, trade evaluation, optimal lineups, matchup previews, and player analysis.</li>
+        <li><strong>Advanced analytics:</strong> Monte Carlo simulations, consistency reports, strength of schedule, Vegas lines, and weather impact.</li>
+      </ul>
+
+      <h2>Architecture</h2>
+      <p>Built in Python 3.10 or later as an MCP server, pulling from the public, unauthenticated Sleeper API and ESPN, with optional OpenWeather data for weather impact. The scoring engine re-derives value from each league's own settings rather than relying on generic, one-size-fits-all rankings.</p>
+
+      <h2>Testing</h2>
+      <p>The test suite runs roughly 113 invariant checks against the scoring and recommendation logic. Source is MIT licensed.</p>
+
+      <h2>Source Code</h2>
+      <p>The full server, fantasy football logic modules, and test suite are on GitHub.</p>
+      <p><a class="btn btn-secondary" href="https://github.com/ekam-mann/sleeper-fantasy-mcp-" target="_blank" rel="noopener">View on GitHub</a></p>
+    </div>
+
+    <nav class="project-nav" aria-label="Project navigation">
+      <a href="/projects/autonomous-claw/">← Previous: Autonomous Underwater Claw</a>
+      <a href="/projects/">All Projects</a>
+    </nav>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-contact">
+      <a href="#" data-mail-user="ekammann" data-mail-domain="student.ubc.ca">ekammann [at] student.ubc.ca</a>
+      <a href="https://linkedin.com/in/ekam-m" target="_blank" rel="noopener">linkedin.com/in/ekam-m</a>
+    </div>
+    <p class="footer-note">UBC Vancouver, Mechanical Engineering, expected 2029.</p>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>
